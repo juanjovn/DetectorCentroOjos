@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		816A15D9209721C200635E88 /* AutoAimEyeTracking */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AutoAimEyeTracking; sourceTree = BUILT_PRODUCTS_DIR; };
 		816A15DC209721C200635E88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		816A15E5209724B600635E88 /* haarcascade_eye.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = haarcascade_eye.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +58,26 @@
 		816A15DB209721C200635E88 /* AutoAimEyeTracking */ = {
 			isa = PBXGroup;
 			children = (
-				816A15DC209721C200635E88 /* main.cpp */,
+				816A15E42097242000635E88 /* cascades */,
+				816A15E32097240500635E88 /* src */,
 			);
 			path = AutoAimEyeTracking;
+			sourceTree = "<group>";
+		};
+		816A15E32097240500635E88 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				816A15DC209721C200635E88 /* main.cpp */,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
+		816A15E42097242000635E88 /* cascades */ = {
+			isa = PBXGroup;
+			children = (
+				816A15E5209724B600635E88 /* haarcascade_eye.xml */,
+			);
+			path = cascades;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,6 +257,54 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 52SFG8NL7R;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/opencv/3.4.1_2/include;
+				"LIBRARY_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/opencv/3.4.1_2/lib;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_videostab",
+					"-lopencv_aruco",
+					"-lopencv_bgsegm",
+					"-lopencv_bioinspired",
+					"-lopencv_ccalib",
+					"-lopencv_dnn_objdetect",
+					"-lopencv_dpm",
+					"-lopencv_face",
+					"-lopencv_photo",
+					"-lopencv_fuzzy",
+					"-lopencv_hfs",
+					"-lopencv_img_hash",
+					"-lopencv_line_descriptor",
+					"-lopencv_optflow",
+					"-lopencv_reg",
+					"-lopencv_rgbd",
+					"-lopencv_saliency",
+					"-lopencv_stereo",
+					"-lopencv_structured_light",
+					"-lopencv_phase_unwrapping",
+					"-lopencv_surface_matching",
+					"-lopencv_tracking",
+					"-lopencv_datasets",
+					"-lopencv_text",
+					"-lopencv_dnn",
+					"-lopencv_plot",
+					"-lopencv_xfeatures2d",
+					"-lopencv_shape",
+					"-lopencv_video",
+					"-lopencv_ml",
+					"-lopencv_ximgproc",
+					"-lopencv_calib3d",
+					"-lopencv_features2d",
+					"-lopencv_highgui",
+					"-lopencv_videoio",
+					"-lopencv_flann",
+					"-lopencv_xobjdetect",
+					"-lopencv_imgcodecs",
+					"-lopencv_objdetect",
+					"-lopencv_xphoto",
+					"-lopencv_imgproc",
+					"-lopencv_core",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
