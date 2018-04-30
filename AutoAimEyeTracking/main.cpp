@@ -11,11 +11,16 @@ cv::String windowTitle = "Auto Aim Eye Tracking";
 
 int main(int argc, const char * argv[]) {
     
-    if (!cascade.load(cascadePath))
+    cascade.load(cascadePath);
+    if (cascade.empty())
     {
         std::cout << "Error loading cascade\n";
         return -1;
     }
+    
+    cv::namedWindow (windowTitle, CV_WINDOW_NORMAL);
+    cv::VideoCapture camera;
+    
     
     return 0;
 }
