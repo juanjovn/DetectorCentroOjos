@@ -8,6 +8,7 @@
 cv::String cascadePath = "./cascades/haarcascade_eye.xml";
 cv::CascadeClassifier cascade;
 cv::String windowTitle = "Auto Aim Eye Tracking";
+cv::Rect cropArea(277, 150, 470, 276);
 int camNum = 0;
 
 int main(int argc, const char * argv[]) {
@@ -46,12 +47,14 @@ int main(int argc, const char * argv[]) {
     while (true){
         camera.read(frame);
         cv::resize(frame, cropped, cv::Size(1024, 576));
+        cropped = cropped(cropArea);
         cv::cvtColor(cropped, gray, CV_RGB2GRAY);
-        cascade.detectMultiScale(gray, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(30, 30));
+        cascade.detectMultiScale(gray, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(75, 75));
         if (eyes.size()> 0)
         {
         //std::cout << eyes[0].x << std::endl;
         cv::rectangle(gray, eyes[0], cv::Scalar(0,255,0), 2);
+        //cv::rectangle(gray, eyes[1], cv::Scalar(0,255,0), 2);
         }
         imshow(windowTitle, gray);
         if (cv::waitKey(1) >= 0)
