@@ -17,6 +17,7 @@ int main(int argc, const char * argv[]) {
     cv::Mat frame;
     cv::Mat cropped;
     cv::Mat gray;
+    cv::Mat blurred;
     std::vector<cv::Rect> eyes;
     if (cascade.empty())
     {
@@ -49,7 +50,8 @@ int main(int argc, const char * argv[]) {
         cv::resize(frame, cropped, cv::Size(1024, 576));
         cropped = cropped(cropArea);
         cv::cvtColor(cropped, gray, CV_RGB2GRAY);
-        cascade.detectMultiScale(gray, eyes, 1.1, 2, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(75, 75));
+        cv::GaussianBlur(gray, blurred, cv::Size(11, 25), 0, 0);
+        cascade.detectMultiScale(blurred, eyes, 1.1, 1, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(75, 100));
         if (eyes.size()> 0)
         {
         //std::cout << eyes[0].x << std::endl;
