@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		816A15DD209721C200635E88 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 816A15DC209721C200635E88 /* main.cpp */; };
+		81FBDC3520A5BD5B006EA64B /* findEyeCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81FBDC2E20A5A8F1006EA64B /* findEyeCenter.cpp */; };
+		81FBDC3620A5BD5B006EA64B /* helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 81FBDC3320A5BC0A006EA64B /* helpers.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +28,11 @@
 		816A15D9209721C200635E88 /* AutoAimEyeTracking */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AutoAimEyeTracking; sourceTree = BUILT_PRODUCTS_DIR; };
 		816A15DC209721C200635E88 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		816A15E5209724B600635E88 /* haarcascade_eye.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = haarcascade_eye.xml; sourceTree = "<group>"; };
+		81FBDC2E20A5A8F1006EA64B /* findEyeCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = findEyeCenter.cpp; sourceTree = "<group>"; };
+		81FBDC3020A5A905006EA64B /* findEyeCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = findEyeCenter.h; sourceTree = "<group>"; };
+		81FBDC3120A5A917006EA64B /* helpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = helpers.h; sourceTree = "<group>"; };
+		81FBDC3220A5A918006EA64B /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		81FBDC3320A5BC0A006EA64B /* helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = helpers.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +74,11 @@
 		816A15E32097240500635E88 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				81FBDC2E20A5A8F1006EA64B /* findEyeCenter.cpp */,
+				81FBDC3020A5A905006EA64B /* findEyeCenter.h */,
+				81FBDC3220A5A918006EA64B /* constants.h */,
+				81FBDC3320A5BC0A006EA64B /* helpers.cpp */,
+				81FBDC3120A5A917006EA64B /* helpers.h */,
 				816A15DC209721C200635E88 /* main.cpp */,
 			);
 			name = src;
@@ -137,6 +149,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81FBDC3520A5BD5B006EA64B /* findEyeCenter.cpp in Sources */,
+				81FBDC3620A5BD5B006EA64B /* helpers.cpp in Sources */,
 				816A15DD209721C200635E88 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

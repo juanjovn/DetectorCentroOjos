@@ -4,11 +4,13 @@
 
 #include <iostream>
 
+#include "findEyeCenter.h"
+
 //GLOBAL VARIABLES
 cv::String cascadePath = "./cascades/haarcascade_eye.xml";
 cv::CascadeClassifier cascade;
 cv::String windowTitle = "Auto Aim Eye Tracking";
-cv::Rect cropArea(277, 150, 470, 276);
+cv::Rect cropArea(477, 150, 270, 270);
 int camNum = 0;
 
 int main(int argc, const char * argv[]) {
@@ -18,6 +20,8 @@ int main(int argc, const char * argv[]) {
     cv::Mat cropped;
     cv::Mat gray;
     cv::Mat blurred;
+    cv::Mat zoomed;
+    cv::Point drawPoint, centerPoint;
     std::vector<cv::Rect> eyes;
     if (cascade.empty())
     {
@@ -55,10 +59,15 @@ int main(int argc, const char * argv[]) {
         if (eyes.size()> 0)
         {
         //std::cout << eyes[0].x << std::endl;
-        cv::rectangle(gray, eyes[0], cv::Scalar(0,255,0), 2);
+        cv::rectangle(cropped, eyes[0], cv::Scalar(0,255,0), 2);
+        centerPoint = findEyeCenter(blurred, eyes[0]);
+        drawPoint.x = centerPoint.x + eyes[0].x;
+        drawPoint.y = centerPoint.y + eyes[0].y;
+        cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
         //cv::rectangle(gray, eyes[1], cv::Scalar(0,255,0), 2);
         }
-        imshow(windowTitle, gray);
+        //cv::resize(cropped, zoomed, cv::Size(540, 540));
+        imshow(windowTitle, cropped);
         if (cv::waitKey(1) >= 0)
             break;
     }
