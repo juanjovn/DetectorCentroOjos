@@ -22,7 +22,7 @@ int main(int argc, const char * argv[]) {
     cv::Mat gray;
     cv::Mat blurred;
     cv::Mat zoomed;
-    cv::Point drawPoint, centerPoint;
+    cv::Point drawPoint, centerPoint, prevPoint;
     int xCoord, yCoord = 0;
     std::string coords;
     std::vector<cv::Rect> eyes;
@@ -52,7 +52,8 @@ int main(int argc, const char * argv[]) {
         
     }
     
-    while (true){
+    while (true)
+    {
         camera.read(frame);
         cv::resize(frame, cropped, cv::Size(1024, 576));
         cropped = cropped(cropArea);
@@ -65,20 +66,35 @@ int main(int argc, const char * argv[]) {
         cascade.detectMultiScale(blurred, eyes, 1.1, 1, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(75, 100));
         if (eyes.size()> 0)
         {
-        //std::cout << eyes[0].x << std::endl;
-        cv::rectangle(cropped, eyes[0], cv::Scalar(0,255,0), 2);
-        centerPoint = findEyeCenter(blurred, eyes[0]);
-        //Point where the circle will be drawed
-        drawPoint.x = centerPoint.x + eyes[0].x - 3; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
-        drawPoint.y = centerPoint.y + eyes[0].y + 3;
-        cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
-        xCoord = abs(drawPoint.x) - 100;
-        yCoord = 150 - abs(drawPoint.y);
-        coords = std::to_string(xCoord);
-        coords += ", ";
-        coords += std::to_string(yCoord);
-        cv::putText(cropped, coords, cv::Point(0, 290), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255),2);
-        //cv::rectangle(gray, eyes[1], cv::Scalar(0,255,0), 2);
+            //std::cout << eyes[0].x << std::endl;
+            cv::rectangle(cropped, eyes[0], cv::Scalar(0,255,0), 2);
+            centerPoint = findEyeCenter(blurred, eyes[0]);
+                
+            //////////////////////////////////////////
+            double distX = abs(prevPoint.x - centerPoint.x);
+            double distY = abs(prevPoint.y - centerPoint.y);
+            if( distX <= 10 && distY <= 10)
+            {
+                centerPoint = prevPoint;
+            }
+            else
+            {
+                prevPoint = centerPoint;
+            }
+            std::cout << distX << ", " << distY << std::endl;
+            //////////////////////////////////////////
+                
+            //Point where the circle will be drawed
+            drawPoint.x = centerPoint.x + eyes[0].x - 3; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
+            drawPoint.y = centerPoint.y + eyes[0].y + 3;
+            cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
+            xCoord = abs(drawPoint.x) - 100;
+            yCoord = 150 - abs(drawPoint.y);
+            coords = std::to_string(xCoord);
+            coords += ", ";
+            coords += std::to_string(yCoord);
+            cv::putText(cropped, coords, cv::Point(0, 290), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 0, 255),2);
+            //cv::rectangle(gray, eyes[1], cv::Scalar(0,255,0), 2);
         }
         //cv::resize(cropped, zoomed, cv::Size(540, 540));
         imshow(windowTitle, cropped);
