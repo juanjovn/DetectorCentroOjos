@@ -1,4 +1,5 @@
 //aimsteady.com
+//aimsteady.com/home
 #include "opencv2/objdetect/objdetect.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -9,7 +10,8 @@
 #include "findEyeCenter.h"
 
 //GLOBAL VARIABLES
-//JJ1
+//kildos 1
+//prueba de JJ 1
 cv::String cascadePath = "./cascades/haarcascade_eye.xml";
 cv::CascadeClassifier cascade;
 cv::String windowTitle = "Auto Aim Eye Tracking";
@@ -56,7 +58,7 @@ int main(int argc, const char * argv[]) {
     
     while (true)
     {
-        //JJ2
+        //kildos 2
         camera.read(frame);
         cv::resize(frame, cropped, cv::Size(1024, 576));
         cropped = cropped(cropArea);
@@ -117,7 +119,7 @@ int main(int argc, const char * argv[]) {
             break;
     }
     
-    
+    //kildos fin
     std::cout << "*** END OF PROGRAM ***\n*** Press ENTER to exit ***\n";
     std::cin.get();
     
