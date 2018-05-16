@@ -9,6 +9,7 @@
 
 //GLOBAL VARIABLES
 //kildos 1
+//prueba de JJ 1
 cv::String cascadePath = "./cascades/haarcascade_eye.xml";
 cv::CascadeClassifier cascade;
 cv::String windowTitle = "Auto Aim Eye Tracking";
