@@ -69,25 +69,37 @@ int main(int argc, const char * argv[]) {
             //std::cout << eyes[0].x << std::endl;
             cv::rectangle(cropped, eyes[0], cv::Scalar(0,255,0), 2);
             centerPoint = findEyeCenter(blurred, eyes[0]);
-                
+            //------by Marcos----
+            bool drawRequired=false;
+            cv::Point prueba;
+            prueba.x=eyes[0].x;
+            prueba.y=eyes[0].y;
+            cv::circle(cropped,prueba,4,cv::Scalar(255,0,0),2);
+            //------end by Marcos
             //////////////////////////////////////////
             double distX = abs(prevPoint.x - centerPoint.x);
             double distY = abs(prevPoint.y - centerPoint.y);
-            if( distX <= 10 && distY <= 10)
+            if( distX <= 10 && distY <= 10 && ((centerPoint.y+eyes[0].y) - eyes[0].y)>5 )
             {
                 centerPoint = prevPoint;
+                drawRequired=true;
             }
-            else
+            else 
             {
                 prevPoint = centerPoint;
+                drawRequired=false;
             }
+            //std::cout << "Y ojo = " << centerPoint.y+eyes[0].y << " Y test = " << prueba.y <<" Distancia = " << (centerPoint.y - prueba.y) << std::endl;
+            
             std::cout << distX << ", " << distY << std::endl;
             //////////////////////////////////////////
-                
-            //Point where the circle will be drawed
-            drawPoint.x = centerPoint.x + eyes[0].x - 3; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
-            drawPoint.y = centerPoint.y + eyes[0].y + 3;
-            cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
+            if(drawRequired){
+                //Point where the circle will be drawed
+                cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
+                drawPoint.x = centerPoint.x + eyes[0].x - 3; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
+                drawPoint.y = centerPoint.y + eyes[0].y + 3;
+            }
+            //cv::circle(cropped, drawPoint, 10, cv::Scalar(0, 0, 255), 2); //testing
             xCoord = abs(drawPoint.x) - 100;
             yCoord = 150 - abs(drawPoint.y);
             coords = std::to_string(xCoord);
