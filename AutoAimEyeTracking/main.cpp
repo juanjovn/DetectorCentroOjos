@@ -1,4 +1,8 @@
-//aimsteady.com
+//AutoAim project
+//Marksmanship Technology
+//Juanjo Valiño @juanjovn
+//Marcos Sabarís @kildos19
+//www.aimsteady.com
 #include "opencv2/objdetect/objdetect.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -9,10 +13,11 @@
 #include "findEyeCenter.h"
 
 //GLOBAL VARIABLES
-//JJ1
 cv::String cascadePath = "./cascades/haarcascade_eye.xml";
 cv::CascadeClassifier cascade;
-cv::String windowTitle = "Auto Aim Eye Tracking";
+cv::String windowTitle = "AutoAim Eye Tracking";
+cv::String debugWindowTitle = "Detecting eye";
+cv::String eyeCenterWindowTitle = "Algorithm eye center";
 cv::Rect cropArea(477, 150, 200, 300);
 int camNum = 0;
 
@@ -54,9 +59,17 @@ int main(int argc, const char * argv[]) {
         
     }
     
+    //Windows
+    namedWindow(windowTitle);
+    namedWindow(debugWindowTitle);
+    namedWindow(eyeCenterWindowTitle);
+    moveWindow(windowTitle, 400 , 180);
+    moveWindow(eyeCenterWindowTitle, 800 , 180);
+    moveWindow(debugWindowTitle, 600 , 180);
+    
+    
     while (true)
     {
-        //JJ2
         camera.read(frame);
         cv::resize(frame, cropped, cv::Size(1024, 576));
         cropped = cropped(cropArea);
@@ -66,12 +79,14 @@ int main(int argc, const char * argv[]) {
         cv::putText(cropped, "X", cv::Point(0, 145), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 255),2);
         cv::putText(cropped, "Y", cv::Point(103, 295), cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(0, 255, 255),2);
         cv::GaussianBlur(gray, blurred, cv::Size(11, 25), 0, 0);
+        imshow(debugWindowTitle, blurred);
+        imshow(eyeCenterWindowTitle, gray);
         cascade.detectMultiScale(blurred, eyes, 1.1, 1, 0 |cv::CASCADE_SCALE_IMAGE, cv::Size(75, 100));
         if (eyes.size()> 0)
         {
             //std::cout << eyes[0].x << std::endl;
             cv::rectangle(cropped, eyes[0], cv::Scalar(0,255,0), 2);
-            centerPoint = findEyeCenter(blurred, eyes[0]);
+            centerPoint = findEyeCenter(gray, eyes[0]);
             //------by Marcos----
             bool drawRequired=false;
             cv::Point prueba;
@@ -82,7 +97,7 @@ int main(int argc, const char * argv[]) {
             //////////////////////////////////////////
             double distX = abs(prevPoint.x - centerPoint.x);
             double distY = abs(prevPoint.y - centerPoint.y);
-            if( distX <= 10 && distY <= 10 && ((centerPoint.y+eyes[0].y) - eyes[0].y)>5 )
+            /*if( distX <= 10 && distY <= 10 && ((centerPoint.y+eyes[0].y) - eyes[0].y)>5 )
             {
                 centerPoint = prevPoint;
                 drawRequired=true;
@@ -91,17 +106,17 @@ int main(int argc, const char * argv[]) {
             {
                 prevPoint = centerPoint;
                 drawRequired=false;
-            }
+            }*/
             //std::cout << "Y ojo = " << centerPoint.y+eyes[0].y << " Y test = " << prueba.y <<" Distancia = " << (centerPoint.y - prueba.y) << std::endl;
             
             std::cout << distX << ", " << distY << std::endl;
             //////////////////////////////////////////
-            if(drawRequired){
+//            if(drawRequired){
+                drawPoint.x = centerPoint.x + eyes[0].x - 2; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
+                drawPoint.y = centerPoint.y + eyes[0].y - 3;
                 //Point where the circle will be drawed
                 cv::circle(cropped, drawPoint, 4, cv::Scalar(255, 0, 255), 2);
-                drawPoint.x = centerPoint.x + eyes[0].x - 3; //The numbers subtracted at the end is only for manual correction as the point appears to be a little bit shifted to the right
-                drawPoint.y = centerPoint.y + eyes[0].y + 3;
-            }
+//            }
             //cv::circle(cropped, drawPoint, 10, cv::Scalar(0, 0, 255), 2); //testing
             xCoord = abs(drawPoint.x) - 100;
             yCoord = 150 - abs(drawPoint.y);
